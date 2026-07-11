@@ -1,0 +1,7 @@
+#FFE520
+#1842BB
+#EFEFEF
+#FFFFFF
+#E0E0E0 // disable button
+#FFC107 //warning
+

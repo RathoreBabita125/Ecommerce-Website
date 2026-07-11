@@ -1,0 +1,11 @@
+.loader-compo {
+   display: flex !important;
+   justify-content: center !important;
+   align-items: center !important;
+   height: 100vh !important;
+   width: 100vw !important;
+   position: fixed !important;
+   top: 0 !important;
+   left: 0 !important;
+   z-index: 1000 !important;
+}

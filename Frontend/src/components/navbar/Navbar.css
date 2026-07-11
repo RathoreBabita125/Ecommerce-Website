@@ -1,0 +1,26 @@
+.navbar-section{
+    background-color: #ffffff !important;
+}
+.avtar-icon{
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+.profile{
+    background-color: #1842BB !important;
+}
+.cart-wishlist-icon{
+    color: #1842BB !important;
+    font-size: 40px !important;
+    cursor: pointer;
+}
+.search-input{
+    width: 40rem !important;
+}
+
+.navbar-items{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+

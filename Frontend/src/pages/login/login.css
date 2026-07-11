@@ -1,0 +1,309 @@
+.register-section, .login-section, .forget-section{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+.register-parent{
+    width: 90%;
+    height: 80vh;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.register-left-section{
+    width: 100%;
+    height: 80vh;
+    background-image: url('../../assets/promotion.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+.register-left{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.register-left-typo{
+    font-weight: bold !important;
+    font-size: 80px !important;
+    color:white !important;
+    word-spacing: -10px !important;
+    line-height: 1 !important;
+}
+.register-right-section{
+    width: 70%;
+    height: 80vh;
+    background-color: white;
+    color: #1842BB;
+}
+.register-right-top-button{
+    float: right;
+    margin-top: 2.5rem;
+    margin-right: 4rem;
+    gap: 4px;
+}
+.register-form{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.register-signup-button{
+    padding: 10px !important;
+    font-size: 20px !important;
+    margin-top: 20px !important;
+}
+.register-signup{
+    margin: 0 auto;
+    align-items: center;
+    margin-top: 10px;
+}
+.register-box-line{
+    width: 150px;
+    height: 0;
+    border: 1px solid #1842BB;
+}
+.register-with-google{
+    width: 100%;
+    padding: 7px;
+    color: #1842BB !important;
+}
+@media screen and (max-width:1280px){
+    .register-parent, .login-box{
+        width: 96%;
+    }
+    .register-left-section, .register-right-section{
+        padding: 20px;
+    }
+    .register-left-typo{
+        font-size: 50px !important;
+    }
+    .register-form{
+        width: 100%;
+        gap: 10px !important;
+        margin-top: 10px !important;
+    }
+    .register-signup-button{
+        padding: 5px !important;
+        font-size: 15px !important;
+        margin-top: 2px !important;
+    }
+    .register-box-line{
+        width: 50px;
+    }    
+}
+@media screen and (max-width:768px){
+    .register-parent, .login-box{
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+    }
+    .register-left-section, .register-right-section{
+        width: 100%;
+        min-height: auto;
+    }
+    .register-left-section{
+       visibility: hidden
+    }
+    .register-right-section{
+        padding: 25px 20px;
+    }
+    .register-form{
+        gap:15px;
+    }
+    .register-signup-button{
+        width: 100%;
+    }
+    .register-box-line{
+        width: 50px;
+    }
+}
+@media screen  and (max-width:480){
+    .register-right-section{
+        padding: 20px 15px;
+    }
+    .register-signup-button{
+        font-size: 16px !important;
+        padding: 10px !important;
+    }
+    .register-with-google{
+        max-width: 100%;
+    }
+}
+/* Login */
+.login-box{
+    display: flex;
+    width: 50%;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    color: #1842BB !important;
+    padding: 5px;
+}
+.login-box-1{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    position: relative;
+}
+.login-box-2{
+    width: 40%;
+    height: 80vh;
+    background-color: #1842BB !important;
+}
+.login-right-top-button{
+    position: absolute;
+    top: -100px;
+    right: -25px;
+}
+.login-form-box{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+.login-button{
+    padding: 3px !important;
+    font-size: 20px !important;
+    color: white;
+}
+.login-box-line{
+    width: 150px;
+    height: 0;
+    border: 1px solid gray;
+}
+.login-with-google{
+    padding: 2px;
+    text-transform: none !important;
+    display: flex;
+    gap: 7px;
+    color: #1842BB !important;
+}
+@media screen and (max-width:1280px){
+    .login-box{
+        padding: 10px;
+    }
+    .login-form-box{
+        width: 80% ;
+        margin-top: 15px;
+    }
+    .login-box-line{
+        width: 120px;
+    }
+}
+@media screen and (max-width:768px){
+    .login-box-1{
+        width: 100% ;
+    }
+    .login-box-1{
+        width: 80% ;
+    }
+    .login-form-box{
+        width: 100% ;
+        margin-top: 15px;
+    }
+}
+@media screen and (max-width:480px){
+    .login-box-line{
+        width: 80px;
+    }
+}
+/* forget */
+.forget-box{
+    width: 50%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1842BB !important;
+    background-color: white;
+}
+.forget-box-1{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.forget-form-box{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 3;
+    width: 60%;
+    gap: 20px;
+}
+.forget-form-typo{
+   font-weight: bold !important; 
+   font-size: 40px !important;
+   margin-top: 5px !important;
+}
+.reset-button{
+    padding: 10px !important;
+    font-size: 20px !important;
+    margin-top: 3px !important;
+    color: #ffffff !important;
+}
+.back-login{
+    text-transform: none !important;
+    display: flex;
+    gap: 2px;
+    color: #1842BB !important;
+}
+@media screen and (max-width:768px){
+    .forget-box{
+        padding: 15px;
+        width:95% ;
+    }
+    .forget-box-1{
+        max-width: 100%;
+        padding: 16px;
+    }
+    .forget-form-box{
+        width: 80%;
+    }
+    .forget-form-typo{
+        font-size: 25px !important;
+    }
+    .reset-button{
+        font-size: 16px !important;
+        padding: 10px !important;
+    }
+    .back-login{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width:480px){
+    .forget-box{
+        padding: 10px;
+        width: 90%;
+        align-items: start;
+    }
+    .forget-box-1{
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+        gap: 8px;
+    }
+    .reset-button{
+        font-size: 15px !important;
+        width: 100%;
+    }
+    .back-login{
+        font-size: 12px;
+        align-items: center;
+    }
+}
