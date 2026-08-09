@@ -1,42 +1,60 @@
-import { createContext, useState } from "react";
+import { useMutation } from "@apollo/client/react";
+import { createContext } from "react";
+import { ADDTOCART, GETCART, REMOVEFROMCART } from "../query/cart";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
 
-    const addToCart = (product, quantity = 1) => {
-        setCartItems((prev) => {
-            const existing = prev.find((item) => item.id === product.id);
-            if (existing) {
-                return prev.map((item) =>
-                    item.id === product.id
-                        ? { ...item, quantity: item.quantity + quantity }
-                        : item
-                );
+    const navigate = useNavigate();
+
+    const [addToCart] = useMutation(ADDTOCART, {
+        refetchQueries: [GETCART]
+    });
+
+     const[removeFromCart] = useMutation(REMOVEFROMCART,{
+        refetchQueries:[GETCART]
+    });
+
+    const handleAddProductToCart = async (product, quantity) => {
+        try {
+            const response = await addToCart({
+                variables: {
+                    product:product.id,
+                    quantity: quantity
+                }
+            });
+            if (response) {
+                toast.success("Product is addded to cart successfully.");
+                navigate('/cart');
             }
-            return [...prev, { ...product, quantity }];
-        });
-    };
+            else {
+                throw ("Something went wrong");
+            }
+        } catch (error) {
+            toast.error(`${error}`);
+            navigate('/cart');
+        }
+    }
 
-    const removeFromCart = (productId) => {
-        setCartItems((prev) => prev.filter((item) => item.id !== productId));
-    };
-
-    const updateQuantity = (productId, quantity) => {
-        if (quantity < 1) return;
-        setCartItems((prev) =>
-            prev.map((item) =>
-                item.id === productId ? { ...item, quantity } : item
-            )
-        );
-    };
-
-    const clearCart = () => setCartItems([]);
-    const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const handleDeleteCartItem = async(cartItem) => {
+        try {
+            const response=await removeFromCart({
+                variables:{
+                    id:Number(cartItem.id)
+                }
+            })
+            console.log(response);
+            toast.success("Item has been removed from cart.");
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartCount }}>
+        <CartContext.Provider value={{handleAddProductToCart, handleDeleteCartItem, navigate}}>
             {children}
         </CartContext.Provider>
     );

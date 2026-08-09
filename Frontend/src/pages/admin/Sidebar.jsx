@@ -2,7 +2,6 @@ import { Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText,
 import company from '../../assets/company.png';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InventoryIcon from "@mui/icons-material/Inventory2";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import DiscountIcon from "@mui/icons-material/LocalOffer";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -41,12 +40,6 @@ const Sidebar = ({ drawerWidth, mobileOpen, setMobileOpen }) => {
           <ListItemButton >
             <ListItemIcon><CategoryIcon sx={{color:'#1842BB'}}/></ListItemIcon>
             <ListItemText primary="Categories" sx={{color:'black'}}/>
-          </ListItemButton>
-        </Link>
-        <Link to='/admin/orders' style={{textDecoration:'none'}}>
-          <ListItemButton >
-            <ListItemIcon><ShoppingCartIcon sx={{color:'#1842BB'}}/></ListItemIcon>
-            <ListItemText primary="Orders" sx={{color:'black'}}/>
           </ListItemButton>
         </Link>
         <Link to='/admin/users' style={{textDecoration:'none'}}>

@@ -1,8 +1,10 @@
 import { addressResolver } from "./address.controller.ts";
+import { cartResolvers } from "./cart.controller.ts";
 import { categoryResolver } from "./category.controller.ts";
 import { couponResolver } from "./coupon.controller.ts";
 import { productResolver } from "./product.controller.ts";
 import { userResolver } from "./user.controller.ts";
+import { wishlistResolver } from "./wishlist.controller.ts";
 
 export const resolvers={
     Query:{
@@ -10,7 +12,9 @@ export const resolvers={
         ...productResolver.Query,
         ...categoryResolver.Query,
         ...addressResolver.Query,
-        ...couponResolver.Query
+        ...couponResolver.Query,
+        ...cartResolvers.Query,
+        ...wishlistResolver.Query
     },
     
     Mutation:{
@@ -18,7 +22,9 @@ export const resolvers={
         ...productResolver.Mutation,
         ...categoryResolver.Mutation,
         ...addressResolver.Mutation,
-        ...couponResolver.Mutation
+        ...couponResolver.Mutation,
+        ...cartResolvers.Mutation,
+        ...wishlistResolver.Mutation
     },
-    
-}
+      
+} 

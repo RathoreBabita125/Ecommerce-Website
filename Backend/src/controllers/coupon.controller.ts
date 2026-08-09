@@ -11,7 +11,11 @@ export const couponResolver = {
     Query: {
         getCoupons: async (_: any, couponData: any) => {
             const couponRepo = AppDataSource.getRepository(Coupon);
-            const allCoupons = await couponRepo.find();
+            const allCoupons = await couponRepo.find({
+                relations:{
+                    user:true
+                }
+            });
             if (!allCoupons) {
                 throw new Error("Coupon does not exist.");
             }

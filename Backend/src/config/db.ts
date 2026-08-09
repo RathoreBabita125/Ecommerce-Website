@@ -9,6 +9,7 @@ import { Product } from "../models/product.ts";
 import { Review } from "../models/review.ts";
 import { User } from "../models/user.ts";
 import { Wishlist } from "../models/wishlist.ts";
+import { CartItem } from "../models/cart_item.ts";
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
     database: 'Ecommerce Website',
     // logging: true,
     synchronize: true,
-    entities:[Address, Cart, Category, Coupon, Order, OrderItems, Product, Review, User, Wishlist]
+    entities:[Address, Cart, Category, Coupon, Order, OrderItems, Product, Review, User, Wishlist, CartItem]
 });
 
 

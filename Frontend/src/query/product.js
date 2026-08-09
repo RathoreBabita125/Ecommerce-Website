@@ -23,6 +23,7 @@ export const GETPRODUCTS = gql`
       price
       stockQty
       status
+      discountPrice
       productImage
       description
       slug

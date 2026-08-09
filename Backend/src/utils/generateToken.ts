@@ -10,7 +10,7 @@ export const generateAccessToken = (userData: any) => {
         },
         process.env.ACCESS_SECRET_KEY as any,
         {
-            expiresIn: '15m'
+            expiresIn: '7d'
         }
     )
     return accessToken;

@@ -1,6 +1,7 @@
 import {gql} from 'graphql-tag';
 
 export const addressSchema=gql`
+
     type Address{
         id:ID!
         user:User!
@@ -26,7 +27,6 @@ export const addressSchema=gql`
 
     type Mutation{
         createAddress(
-            id:ID!
             user:ID!
             phone:String!
             address_line1:String!
@@ -36,7 +36,7 @@ export const addressSchema=gql`
             state:String!
             pincode:String!
             country:String!
-            type:String!
+            type:String
         ):AddressResponse
 
         updateAddress(
@@ -50,7 +50,7 @@ export const addressSchema=gql`
             state:String!
             pincode:String!
             country:String!
-            type:String!
+            type:String
         ):AddressResponse
 
         deleteAddress(

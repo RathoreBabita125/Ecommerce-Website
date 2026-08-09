@@ -1,4 +1,4 @@
-import { CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./user.ts";
 import { Product } from "./product.ts";
 
@@ -7,11 +7,14 @@ export class Wishlist{
     @PrimaryGeneratedColumn()
     id!:number;
 
+    @Column({type:'bool', default:null})
+    isWishlisted!:boolean;
+
     @CreateDateColumn({type:'date'})
-    createdAt!:'date';
+    createdAt!:Date;
 
     @UpdateDateColumn({type:'date'})
-    updatedAt!:'date';
+    updatedAt!:Date;
 
     @ManyToOne(()=>User)
     user!:User;

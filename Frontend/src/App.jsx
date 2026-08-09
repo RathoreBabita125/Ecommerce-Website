@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signup from './pages/login/Signup'
 import Signin from './pages/login/Signin'
 import Forget from './pages/login/Forget'
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import Home from "./pages/customer/Home";
 import ProtectedRoute from "./protectedRoute/ProtectedRoute";
 import { AdminLayout } from "./pages/admin/AdminLayout";
@@ -10,18 +10,27 @@ import UnAuthorized from "./protectedRoute/UnAuthorized";
 import CustomerLayout from "./pages/customer/CustomerLayout";
 import AdminHome from "./pages/admin/AdminHome";
 import Product from "./pages/admin/Product";
-import Order from "./pages/admin/Order";
 import User from "./pages/admin/User";
 import Coupon from "./pages/admin/Coupon";
 import AdminCategory from "./pages/admin/Category";
 import CartPage from "./pages/customer/Cart";
 import CheckoutPage from "./pages/customer/CheckoutPage";
+import WishlistPage from "./pages/customer/Wishlist";
+import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./context/WishlistContext";
+import AddAdddress from "./pages/address/AddAddress";
 
 const router = createBrowserRouter([
 
   // Customer Routes
   {
-    element: <CustomerLayout />,
+    element: <>
+      <CartProvider>
+        <WishlistProvider>
+          <CustomerLayout />
+        </WishlistProvider>
+      </CartProvider>,
+    </>,
     children: [
       {
         path: "/",
@@ -35,7 +44,15 @@ const router = createBrowserRouter([
         path: "/cart",
         element: (
           <ProtectedRoute allowedRoles={["Customer"]}>
-            <CartPage/>
+            <CartPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/wishlist",
+        element: (
+          <ProtectedRoute allowedRoles={["Customer"]}>
+            <WishlistPage />
           </ProtectedRoute>
         ),
       },
@@ -47,9 +64,17 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/address",
+        element: (
+          <ProtectedRoute allowedRoles={["Customer"]}>
+            <AddAdddress />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
-  
+
   // Admin Routes
   {
     element: <AdminLayout />,
@@ -71,18 +96,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/admin/orders",
-        element: (
-          <ProtectedRoute allowedRoles={["Admin"]}>
-            <Order/>
-          </ProtectedRoute>
-        ),
-      },
-      {
         path: "/admin/categories",
         element: (
           <ProtectedRoute allowedRoles={["Admin"]}>
-            <AdminCategory/>
+            <AdminCategory />
           </ProtectedRoute>
         ),
       },
@@ -90,7 +107,7 @@ const router = createBrowserRouter([
         path: "/admin/users",
         element: (
           <ProtectedRoute allowedRoles={["Admin"]}>
-            <User/>
+            <User />
           </ProtectedRoute>
         ),
       },
@@ -98,7 +115,7 @@ const router = createBrowserRouter([
         path: "/admin/coupons",
         element: (
           <ProtectedRoute allowedRoles={["Admin"]}>
-            <Coupon/>
+            <Coupon />
           </ProtectedRoute>
         ),
       },
@@ -128,7 +145,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router}></RouterProvider>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   )
 }

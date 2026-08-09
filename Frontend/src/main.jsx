@@ -5,16 +5,13 @@ import App from './App.jsx'
 import { ApolloProvider } from '@apollo/client/react'
 import { client } from './client/client.js'
 import { AuthContextProvider } from './context/AuthContext.jsx'
-import { CartProvider } from './context/CartContext.jsx'
 
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
     <ApolloProvider client={client}>
       <AuthContextProvider>
-         <CartProvider>
-          <App />
-         </CartProvider>
+        <App />
       </AuthContextProvider>
     </ApolloProvider>
   </StrictMode>,

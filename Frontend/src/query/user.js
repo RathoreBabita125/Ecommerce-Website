@@ -1,12 +1,21 @@
 import { gql } from '@apollo/client'
 
 export const GETUSERS = gql`
-    query getUsers{
-        getUsers{
+    query getUsers(
+        $firstName:String
+        $email:String
+    ){
+        getUsers(
+            firstName:$firstName
+            email:$email
+        ){
+            id
             firstName
             lastName
             email
             role
+            status
+            createdAt
         }
     }
 `;
@@ -14,6 +23,7 @@ export const GETUSERS = gql`
 export const GETME=gql`
     query getMe{
         getMe{
+            id
             firstName
             email
             role
@@ -82,3 +92,21 @@ export const FORGET = gql`
         }
     }
 `;
+
+export const LOGOUT = gql`
+    mutation Logout{
+        logout{
+            message
+        }
+    }
+`
+
+export const BLOCKUSER=gql`
+    mutation BlockUser($id:ID!){
+        blockUser(
+            id:$id
+        ){
+            message
+        }
+    }
+`

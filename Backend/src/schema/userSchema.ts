@@ -11,6 +11,7 @@ export const userSchema=gql`
         role:String!
         createdAt:String!
         updatedAt:String!
+        status:String
     }
 
     type AuthResponse{
@@ -20,7 +21,10 @@ export const userSchema=gql`
     }
 
     type Query{
-        getUsers:[User]
+        getUsers(
+            firstName:String
+            email:String
+        ):[User]
         getMe:User
     }
 
@@ -43,6 +47,12 @@ export const userSchema=gql`
             email:String!
             password:String!
             confirmPassword:String!
+        ):AuthResponse
+
+        logout:AuthResponse
+
+        blockUser(
+            id:ID!
         ):AuthResponse
     }
 `

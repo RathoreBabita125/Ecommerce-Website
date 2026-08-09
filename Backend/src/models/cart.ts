@@ -1,24 +1,19 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {CreateDateColumn,Entity,OneToMany,ManyToOne,PrimaryGeneratedColumn,} from "typeorm";
 import { User } from "./user.ts";
+import { CartItem } from "./cart_item.ts";
 import { Product } from "./product.ts";
 
 @Entity()
 export class Cart {
     @PrimaryGeneratedColumn()
-    id!: number
-
-    @Column({type:'int'})
-    quantity!:number
-
-    @CreateDateColumn({type:'date'})
-    createdAt!:Date
-
-    @DeleteDateColumn({type:'date'})
-    deletedAt!:Date
+    id!: number;
 
     @ManyToOne(() => User)
     user!: User;
 
-    @ManyToOne(() => Product, (product) => product.cart)
-    product!: Product;
+    @OneToMany(() => CartItem, (item) => item.cart, { cascade: true })
+    items!: CartItem[];
+
+    @CreateDateColumn({ type: 'timestamp' })
+    createdAt!: Date;
 }

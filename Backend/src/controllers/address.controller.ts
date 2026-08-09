@@ -2,19 +2,26 @@ import { AppDataSource } from "../config/db.ts"
 import { Address } from "../models/address.ts"
 import { User } from "../models/user.ts";
 
-/**
- * 
- */
 export const addressResolver = {
     Query: {
-        getAddress:async(_:any, addressData:any)=>{
+        getAddress: async (_: any, addressData: any, context: any) => {
+
             const addressRepo = AppDataSource.getRepository(Address);
-            const allAddresses=await addressRepo.find({
-                relations:{
-                    user:true
+
+            if (!context.user) {
+                throw new Error("You are not login. Please first login.");
+            }
+
+            const allAddresses = await addressRepo.find({
+                relations: {
+                    user: true
+                },
+                where:{
+                    user:context.user.id
                 }
             });
-            if(!allAddresses){
+
+            if (!allAddresses) {
                 throw new Error("No Address Found.");
             }
             return allAddresses;
@@ -22,25 +29,26 @@ export const addressResolver = {
     },
 
     Mutation: {
-        createAddress: async (_: any, addressData: any) => {
+        createAddress: async (_: any, addressData: any, context: any) => {
+
             try {
                 const addressRepo = AppDataSource.getRepository(Address);
                 const userRepo = AppDataSource.getRepository(User);
-                const user = await userRepo.findOne({ where: { id: addressData.user } });
-                const address = await addressRepo.findOne({
+
+                if (!context.user) {
+                    throw new Error("You are not login. Please first login.")
+                }
+
+                const user = await userRepo.findOne({
                     where: {
-                        id: addressData.id
-                    },
-                    relations: {
-                        user: true
+                        id: context.user.id
                     }
-                })
+                });
+
                 if (!user) {
                     throw new Error("User does not exist.");
                 }
-                if (address) {
-                    throw new Error("Address is already existed");
-                }
+
                 const newAddress = addressRepo.create({
                     id: addressData.id,
                     user: user,
@@ -53,22 +61,37 @@ export const addressResolver = {
                     pincode: addressData.pincode,
                     country: addressData.country,
                     type: addressData.type
-                })
+                });
+
                 await addressRepo.save(newAddress);
+
                 return {
                     message: "you have successfuly created address",
                     address: newAddress
                 }
+
             } catch (error) {
                 throw new Error(`${error} Address creation is failed.`);
             }
         },
 
-        updateAddress: async (_: any, addressData: any) => {
+        updateAddress: async (_: any, addressData: any, context: any) => {
+
             try {
+
                 const addressRepo = AppDataSource.getRepository(Address);
                 const userRepo = AppDataSource.getRepository(User);
-                const user = await userRepo.findOne({ where: { id: addressData.user } });
+
+                if (!context.user) {
+                    throw new Error("You are not login. Please first login.");
+                }
+
+                const user = await userRepo.findOne({
+                    where: {
+                        id: context.user.id
+                    }
+                });
+
                 const address = await addressRepo.findOne({
                     where: {
                         id: addressData.id
@@ -76,13 +99,16 @@ export const addressResolver = {
                     relations: {
                         user: true
                     }
-                })
+                });
+
                 if (!user) {
                     throw new Error("User does not exist.");
                 }
+
                 if (!address) {
                     throw new Error("Address does not exist.");
                 }
+
                 address.user = user,
                     address.phone = addressData.phone,
                     address.address_line1 = addressData.address_line1,
@@ -95,32 +121,44 @@ export const addressResolver = {
                     address.type = addressData.type
 
                 await addressRepo.save(address);
+
                 return {
                     message: "you have successfuly updated address",
                     address: address
                 }
+
             } catch (error) {
                 throw new Error(`${error}, Address updation failed.`);
             }
         },
 
-        deleteAddress: async (_: any, addressData: any) => {
-            try {        
+        deleteAddress: async (_: any, addressData: any, context: any) => {
+
+            try {
                 const addressRepo = AppDataSource.getRepository(Address);
+
+                if (!context.user) {
+                    throw new Error("You are not login. Please first login.");
+                }
+
                 const address = await addressRepo.findOne({
                     where: {
                         id: addressData.id
                     }
-                })
-                if(!address){
+                });
+
+                if (!address) {
                     throw new Error("Address does not exist.");
                 }
+
                 await addressRepo.remove(address);
-                return{
-                    message:"Address is deleted successfully."
+
+                return {
+                    message: "Address is deleted successfully.",
                 }
+
             } catch (error) {
-                  throw new Error(`${error}, Address deletion failed.`);
+                throw new Error(`${error}, Address deletion failed.`);
             }
         }
     }

@@ -1,34 +1,38 @@
-import {Dialog, DialogContent, Box, Typography, IconButton,Button, Stack, Divider, Chip, Rating} from "@mui/material";
+import { Dialog, DialogContent, Box, Typography, IconButton, Button, Stack, Divider, Chip, Rating } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+import { WishlistContext } from "../../context/WishlistContext";
+import { useQuery } from "@apollo/client/react";
+import { GETMYWISHLISTPRODUCT } from "../../query/wishlist";
+import LoadingCompo from "../../common/LoadingCompo";
 
-const ProductDetailModal = ({ open, onClose, product, onAddToCart, onAddToWishlist }) => {
-    const [quantity, setQuantity] = useState(1);
-    const [isWishlisted, setIsWishlisted] = useState(false);
+const ProductDetailModal = ({ open, onClose, product}) => {
+    
+    const {handleAddProductToCart} = useContext(CartContext);
+    const {handleAddToWishlist} = useContext(WishlistContext);
+    const {data:wishlistData, loading} = useQuery(GETMYWISHLISTPRODUCT);
 
     if (!product) return null;
-     
-    const handleWishlistClick = () => {
-        setIsWishlisted((prev) => !prev);
-        onAddToWishlist?.(product);
-    };
 
-    const handleAddToCart = () => {
-        onAddToCart?.({ ...product, quantity });
-    };
+    if(loading) return <LoadingCompo/>
 
-    const increaseQty = () => setQuantity((q) => q + 1);
-    const decreaseQty = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
+    const wishlistedDetail=wishlistData?.getMyWishlist?.filter((wishlistProduct)=>{
+        return wishlistProduct.product.id===product.id
+    });
 
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={(event, reason) => {
+                if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+                    return;
+                }
+                onclose();
+            }}
             maxWidth="lg"
             fullWidth
             PaperProps={{
@@ -36,12 +40,6 @@ const ProductDetailModal = ({ open, onClose, product, onAddToCart, onAddToWishli
                     borderRadius: 3,
                     minHeight: 550
                 }
-            }}
-            onClose={(event, reason) => {
-                if (reason === "backdropClick" || reason === "escapeKeyDown") {
-                    return;
-                }
-                onClose();
             }}
         >
             <Box sx={{ padding: 7 }}>
@@ -79,10 +77,10 @@ const ProductDetailModal = ({ open, onClose, product, onAddToCart, onAddToWishli
                                 {product.price && (
                                     <>
                                         <Typography sx={{ fontSize: 18, color: "#999", textDecoration: "line-through" }}>
-                                            ₹{product.price+(product.price*10/100)}
+                                            ₹{product.price + (product.price * 10 / 100)}
                                         </Typography>
                                         <Typography sx={{ fontSize: 16, color: "#ff905a", fontWeight: 600 }}>
-                                            ({10}% OFF)
+                                            ({product.discountPrice}% OFF)
                                         </Typography>
                                     </>
                                 )}
@@ -109,26 +107,13 @@ const ProductDetailModal = ({ open, onClose, product, onAddToCart, onAddToWishli
                                 <Typography variant="body1"><b>Description:</b> {product?.description}</Typography>
                             </Stack>
 
-                            <Divider sx={{ my: 2.5 }} />
-
-                            <Typography sx={{ fontWeight: 600, fontSize: 15, mb: 1.5 }}>Quantity</Typography>
-                            <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
-                                <IconButton size="small" onClick={decreaseQty} sx={{ border: "1px solid #ddd" }}>
-                                    <RemoveIcon fontSize="small" />
-                                </IconButton>
-                                <Typography sx={{ fontWeight: 600, minWidth: 20, textAlign: "center" }}>
-                                    {quantity}
-                                </Typography>
-                                <IconButton size="small" onClick={increaseQty} sx={{ border: "1px solid #ddd" }}>
-                                    <AddIcon fontSize="small" />
-                                </IconButton>
-                            </Stack>
+                            <Divider sx={{ my: 5 }} />
 
                             <Stack direction="row" spacing={2}>
                                 <Button
                                     variant="contained"
                                     startIcon={<ShoppingCartIcon />}
-                                    onClick={handleAddToCart}
+                                    onClick={()=>handleAddProductToCart(product, 1)}
                                     sx={{
                                         flex: 1, bgcolor: "#1842BB", py: 1.6, fontSize: 16,
                                         "&:hover": { bgcolor: "#1842BB" }
@@ -137,10 +122,10 @@ const ProductDetailModal = ({ open, onClose, product, onAddToCart, onAddToWishli
                                     Add to Cart
                                 </Button>
                                 <IconButton
-                                    onClick={handleWishlistClick}
+                                    onClick={()=>handleAddToWishlist(product)}
                                     sx={{ border: "1px solid #ddd", borderRadius: 1.5, px: 2 }}
                                 >
-                                    {isWishlisted ? (
+                                    {wishlistedDetail?.isWishlisted ? (
                                         <FavoriteIcon sx={{ color: "#1842BB" }} />
                                     ) : (
                                         <FavoriteBorderIcon />

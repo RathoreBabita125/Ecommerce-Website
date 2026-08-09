@@ -43,9 +43,8 @@ const columns = [
 ];
 
 const AdminCategory = () => {
-    const [rows, setRows] = useState(0);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(20);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeRow, setActiveRow] = useState(null);
     const [openAddModal, setOpenAddModal] = useState(false);

@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { Link, useNavigate } from 'react-router-dom'
 import './login.css';
-import { SIGNIN } from "../../query/user";
+import { GETME, SIGNIN } from "../../query/user";
 import { useMutation } from "@apollo/client/react";
 import { handleInputChange } from "../../common/handleInputChange";
 import { useContext, useState } from "react";
@@ -14,58 +14,76 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 
 const Signin = () => {
-    const [signup] = useMutation(SIGNIN);
+
+    const [signin] = useMutation(SIGNIN, {
+        refetchQueries: [GETME],
+        awaitRefetchQueries: true
+    });
+
     const [user, setUser] = useState({
         email: '',
         password: ''
     });
+
     const [error, setError] = useState({
         email: '',
         password: ''
     });
+
     const [showVisible, setShowVisible] = useState(false);
     const navigate = useNavigate();
-    const { authUser } = useContext(AuthContext);
-
+    
     const handleChange = (event) => {
         handleInputChange(event, user, setUser, error, setError);
     }
+
     const handleBlur = (event) => {
         onBlurHandler(event, user, setError);
     }
+
     const checkFormValid =
         user?.email?.trim() !== "" &&
         emailInputCheck.test(user?.email) &&
         user?.password.length >= 8
 
     const loginButtonHandler = async (event) => {
+
         event.preventDefault();
+
         try {
+
             const inputFields = ["email", "password"];
             const isValid = checkValidInput(inputFields, setError, user);
+
             if (!isValid) {
                 toast.error("Username or Password does not exist.");
                 return;
             }
-            const {data} = await signup({
+
+            const { data } = await signin({
                 variables: {
                     email: user.email,
                     password: user.password
                 }
             })
-            const userData = data.signin.user;
-            if (userData.role === 'Admin' ) {
+
+            const userData = data?.signin?.user;
+
+            if (userData?.role === 'Admin') {
                 navigate('/admin/dashboard', { replace: true });
             }
-            else if(userData.role === 'Customer'){
+
+            else if (userData?.role === 'Customer') {
                 navigate('/', { replace: true });
             }
+
             toast.success("You have successfully signed in.");
+
             setUser({
                 email: '',
                 password: ''
             });
-            
+
         } catch (error) {
             console.log(error);
             toast.error("Invalid Credentials");

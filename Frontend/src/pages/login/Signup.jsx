@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { Box, FormControl, IconButton, InputAdornment, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import './login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { emailInputCheck } from '../../constants/const';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -31,14 +31,15 @@ const Signup = () => {
         role: ''
     })
     const [showVisible, setShowVisible] = useState(false);
-    const [signupData] = useMutation(SIGNUP)
+    const [signupData] = useMutation(SIGNUP);
+    const navigate=useNavigate();
 
     const handleChange=(event)=>{
-        handleInputChange(event, user, setUser, error, setError)
+        handleInputChange(event, user, setUser, error, setError);
     }
 
     const handleOnBlur=(event)=>{
-        onBlurHandler(event,user, setError)
+        onBlurHandler(event,user, setError);
     }
 
     const checkFormValid = user?.firstName?.trim() !== "" &&
@@ -79,9 +80,10 @@ const Signup = () => {
                     confirmPassword: '',
                     role: ''
                 });
+                navigate('/signin');
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             toast.error(error.message);
         }
     }

@@ -4,6 +4,8 @@ import { Cart } from "./cart.ts";
 import { Address } from "./address.ts";
 import { Order } from "./order.ts";
 import { Coupon } from "./coupon.ts";
+import { Product } from "./product.ts";
+import { Category } from "./category.ts";
 
 @Entity()
 export class User {
@@ -24,6 +26,9 @@ export class User {
     
     @Column({ type: 'text' })
     role!: string;
+    
+    @Column({ type: 'text', nullable:true })
+    status!: string;
 
     @CreateDateColumn()
     createdAt!: Date;
@@ -47,6 +52,12 @@ export class User {
     order!:Order[];
 
     @OneToMany(()=>Coupon, (coupon)=>coupon.user)
-    coupon!:Coupon[]
+    coupon!:Coupon[];
+
+    @OneToMany(()=>Product, (product)=>product.user)
+    product!:Product;
+
+    @OneToMany(()=>Category, (category)=>category.user)
+    category!:Category;
 
 }

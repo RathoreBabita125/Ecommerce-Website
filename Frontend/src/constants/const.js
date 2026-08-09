@@ -24,9 +24,22 @@ export const productColumns = [
     { key: "action", label: "Action", width: "6%" },
 ];
 
+//coupon coloumns
+export const couponColumns = [
+    { key: "couponCode", label: "Coupon Code", width: "16%" },
+    { key: "discount", label: "Discount", width: "10%" },
+    { key: "minOrderValue", label: "Min Order Value", width: "14%" },
+    { key: "expiryDate", label: "Expiry Date", width: "13%" },
+    { key: "assignedTo", label: "Assigned To", width: "18%" },
+    { key: "email", label: "Email", width: "18%" },
+    { key: "status", label: "Status", width: "10%" },
+    { key: "action", label: "Action", width: "19%" },
+];
+
 // product column and input value
 export const statusOptions = ["Active", "Inactive", "Out of stock"];
 export const productFilterFields = ["productName", "brand", "color", "status", "category"];
+export const userFilterFields=["firstName", "email"]
 export const colorOptions = ["Red", "Blue", "Green", "Black", "White", "Yellow", "Grey", "Pink"];
 export const productColumnOptions = [
     { value: "productName", label: "Product Name" },
@@ -45,18 +58,25 @@ export const categoryColumnOptions = [
 ];
 export const categoryFilterFields = ["categoryName", "slug", "description", "isActive"];
 
+export const userColumnOptions = [
+    { value: "firstName", label: "Customer" },
+    { value: "email", label: "Email" },
+];
+
 //users column
 export const userColumns = [
     { key: "name", label: "Customer", align: "left", width: "24%" },
+    { key: "firstName", label: "First Name", align: "left", width: "15%" },
+    { key: "lastName", label: "Last Name", align: "left", width: "15%" },
     { key: "email", label: "Email", align: "left", width: "20%" },
-    { key: "phone", label: "Phone", align: "left", width: "15%" },
-    { key: "city", label: "City", align: "center", width: "6%" },       
-    { key: "orders", label: "Orders", align: "center", width: "9%" }, 
+    { key: "role", label: "Role", align: "center", width: "6%" },       
     { key: "joinedAt", label: "Joined On", align: "left", width: "13%" },
-    { key: "status", label: "Status", align: "center", width: "8%" },
+    { key: "status", label: "Status", align: "left", width: "13%" },
     { key: "action", label: "Action", align: "center", width: "5%" },
 ];
 
 export const SHIPPING_CHARGE = 49;
 export const GST_PERCENT = 5;
+
+
 

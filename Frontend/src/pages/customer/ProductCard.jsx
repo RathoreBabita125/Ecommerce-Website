@@ -2,29 +2,18 @@ import { Card, CardMedia, CardContent, Typography, Rating, Chip, Box, IconButton
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useState } from "react";
+import ProductDetailModal from "./ProductDetailModal";
+import { useContext, useState } from "react";
+import { WishlistContext } from "../../context/WishlistContext";
 
-const ProductCard = ({ product, onClick, onAddToCart, onAddToWishlist }) => {
-    const [isWishlisted, setIsWishlisted] = useState(false);
+const ProductCard = ({product}) => {
 
-    const handleWishlistClick = (e) => {
-        e.stopPropagation(); 
-        setIsWishlisted((prev) => !prev);
-        onAddToWishlist?.(product);
-    };
-
-    const handleAddToCartClick = (e) => {
-        e.stopPropagation(); 
-        onAddToCart?.(product);
-        onClick?.(product)
-    };
-
+    const [openProduct, setOpenProduct]=useState(false);
+    const {handleAddToWishlist} = useContext(WishlistContext);
+    const [isWishlisted]=useState(false);
+    
     return (
-        <Card
-            className="product-card"
-            sx={{ width: 250, m: 1, cursor: "pointer" }}
-            
-        >
+        <Card className="product-card" sx={{ width: 250, m: 1, cursor: "pointer" }}>
             <Box sx={{ position: "relative" }}>
                 <CardMedia
                     component="img"
@@ -33,7 +22,7 @@ const ProductCard = ({ product, onClick, onAddToCart, onAddToWishlist }) => {
                     alt={product.productName}
                 />
                 <IconButton
-                    onClick={handleWishlistClick}
+                    onClick={()=>handleAddToWishlist(product)}
                     sx={{
                         position: "absolute",
                         top: 8,
@@ -56,6 +45,7 @@ const ProductCard = ({ product, onClick, onAddToCart, onAddToWishlist }) => {
                 <Typography variant="body1" fontWeight={600} noWrap>
                     {product.name}
                 </Typography>
+                
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}>
                     <Rating value={4.1} precision={0.1} size="small" readOnly />
                     <Typography variant="caption">({4.1})</Typography>
@@ -69,7 +59,7 @@ const ProductCard = ({ product, onClick, onAddToCart, onAddToWishlist }) => {
                     fullWidth
                     variant="contained"
                     startIcon={<ShoppingCartIcon />}
-                    onClick={handleAddToCartClick}
+                    onClick={()=>setOpenProduct(true)}
                     sx={{
                         mt: 1.5,
                         bgcolor: "#1842BB",
@@ -79,6 +69,11 @@ const ProductCard = ({ product, onClick, onAddToCart, onAddToWishlist }) => {
                 >
                     Add to Cart
                 </Button>
+                <ProductDetailModal
+                    open={openProduct}
+                    product={product}
+                    onClose={()=>setOpenProduct(false)}
+                />
             </CardContent>
         </Card>
     );

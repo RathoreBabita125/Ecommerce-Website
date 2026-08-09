@@ -2,11 +2,6 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedCol
 import { User } from "./user.ts";
 import { Order } from "./order.ts";
 
-enum AddressType{
-    HOME="HOME",
-    OFFICE="OFFICE",
-    OTHER="OTHER"
-}
 
 @Entity()
 export class Address{
@@ -25,8 +20,8 @@ export class Address{
     @Column({type:'text',nullable:true})
     landmark?:string;
 
-    @Column({type:'enum', enum:AddressType, default:AddressType.HOME})
-    type!:AddressType;
+    @Column({type:'text', nullable:true})
+    type!:string;
 
     @Column({type:'varchar', length:100})
     city!:string;

@@ -4,6 +4,7 @@ import { Category } from "./category.ts";
 import { Review } from "./review.ts";
 import { Wishlist } from "./wishlist.ts";
 import { Cart } from "./cart.ts";
+import { CartItem } from "./cart_item.ts";
 
 @Entity()
 export class Product {
@@ -61,10 +62,9 @@ export class Product {
     @ManyToOne(() => Wishlist, (wishlist) => wishlist.product)
     wishlist!: Wishlist;
 
-    @OneToMany(() => Cart, (cart) => cart.product)
-    cart!: Cart[];
+    @OneToMany(() => CartItem, (items) => items.product)
+    items!: CartItem[];
 
-    @ManyToMany(() => User)
-    @JoinTable()
-    user!: User[];
+   @ManyToOne(()=>User, (user)=>user.product)
+   user!:User
 }

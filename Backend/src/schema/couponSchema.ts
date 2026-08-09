@@ -28,7 +28,6 @@ export const couponSchema=gql`
             expiryDate:Date
             isActive:Boolean
             user:ID
-            
         ):CouponResponse
 
         updateCoupon(

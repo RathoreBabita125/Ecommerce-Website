@@ -1,24 +1,27 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import FilterSidebar from "../customer/FilterSidebar";
 import ProductGrid from "../customer/Product";
-import { CartContext } from "../../context/CartContext";
 import ProductDetailModal from "./ProductDetailModal";
 import { GETPRODUCTS } from "../../query/product";
-import {useQuery} from '@apollo/client/react'
+import { useQuery } from '@apollo/client/react'
 import LoadingCompo from "../../common/LoadingCompo";
 
 const ProductListing = () => {
     const [searchParams] = useSearchParams();
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [priceRange, setPriceRange] = useState([0, 500000]);
-    const { addToCart } = useContext(CartContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    
-    const {data:productData, loading:productLoading}=useQuery(GETPRODUCTS);
-    const selectedCategory = searchParams.get("category") || "Popular"; 
+    const selectedCategory = searchParams.get("category") || "Popular";
+    const searchTerm = searchParams.get("search") || "";
+
+    const { data: productData, loading: productLoading } = useQuery(GETPRODUCTS, {
+        variables: {
+            productName: searchTerm || undefined,
+        },
+    });
 
     const categoryProducts = useMemo(() => {
         if (selectedCategory === "Popular") return productData?.getProducts;
@@ -48,21 +51,12 @@ const ProductListing = () => {
         setIsModalOpen(true);
     };
 
-    const handleAddToCart = (productWithQty) => {
-        addToCart(productWithQty, productWithQty.quantity || 1);
-        setIsModalOpen(false);
-    };
-
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
-    const handleAddToWishlist = (product) => {
-        console.log("Added to wishlist:", product);
-    };
-
-    if(productLoading){
-        return <LoadingCompo/>
+    if (productLoading) {
+        return <LoadingCompo />
     }
 
     return (
@@ -82,7 +76,7 @@ const ProductListing = () => {
                     <Stack sx={{ flex: 1 }}>
                         <ProductGrid
                             products={filteredProducts}
-                            onProductClick={handleProductClick} 
+                            onProductClick={handleProductClick}
                         />
                     </Stack>
                 </Box>
@@ -91,8 +85,6 @@ const ProductListing = () => {
                 open={isModalOpen}
                 onClose={handleCloseModal}
                 product={selectedProduct}
-                onAddToCart={handleAddToCart}
-                onAddToWishlist={handleAddToWishlist}
             />
         </>
     );

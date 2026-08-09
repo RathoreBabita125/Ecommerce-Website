@@ -1,7 +1,7 @@
 import { Box, Typography, Grid } from "@mui/material";
 import ProductCard from "./ProductCard";
 
-const ProductGrid = ({ products, onProductClick }) => {    
+const ProductGrid = ({ products, onProductClick, onAddToCart, onAddToWishlist }) => {
     if (products?.length === 0) {
         return (
             <Box sx={{ p: 4, textAlign: "center", width: "100%" }}>
@@ -10,12 +10,14 @@ const ProductGrid = ({ products, onProductClick }) => {
         );
     }
     return (
-        <Grid container className="product-grid" sx={{ p: 2, gap:5}}>
+        <Grid container className="product-grid" sx={{ p: 2, gap: 5 }}>
             {products?.map((product) => (
-                <ProductCard 
-                    key={product.id} 
+                <ProductCard
+                    key={product.id}
                     product={product}
-                    onClick={onProductClick} 
+                    onClick={onProductClick}
+                    onAddToCart={onAddToCart}
+                    onAddToWishlist={onAddToWishlist}
                 />
             ))}
         </Grid>
