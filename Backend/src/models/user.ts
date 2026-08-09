@@ -5,7 +5,7 @@ import { Address } from "./address.ts";
 import { Order } from "./order.ts";
 import { Coupon } from "./coupon.ts";
 import { Product } from "./product.ts";
-import { Category } from "./category.ts";
+import type { Category } from "./category.ts";
 
 @Entity()
 export class User {
