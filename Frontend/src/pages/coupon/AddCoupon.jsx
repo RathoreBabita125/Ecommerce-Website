@@ -159,7 +159,6 @@ const AddCouponModal = ({ open, onClose }) => {
                         name="user"
                         value={coupon.user}
                         onChange={handleFieldChange}
-                        helperText="Leave empty for a general coupon"
                     >
                         <MenuItem value="">
                             <em>None (General coupon)</em>
