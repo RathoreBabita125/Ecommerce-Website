@@ -10,15 +10,18 @@ import { Review } from "../models/review.ts";
 import { User } from "../models/user.ts";
 import { Wishlist } from "../models/wishlist.ts";
 import { CartItem } from "../models/cart_item.ts";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'Cel%Bd@2026',
-    database: 'Ecommerce Website',
+    // host: 'localhost',
+    // port: 5432,
+    // username: 'postgres',
+    // password: 'Cel%Bd@2026',
+    // database: 'Ecommerce Website',
     // logging: true,
+    database:process.env.DATABASE_URL,
     synchronize: true,
     entities:[Address, Cart, Category, Coupon, Order, OrderItems, Product, Review, User, Wishlist, CartItem]
 });
