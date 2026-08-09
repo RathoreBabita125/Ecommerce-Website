@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
     "target": "ES2022",
     "module": "nodenext",
     "moduleResolution": "NodeNext",
     "strict": true,
     "esModuleInterop": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "skipLibCheck": true,
-    "allowImportingTsExtensions":true,
-    "rewriteRelativeImportExtensions":true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }
